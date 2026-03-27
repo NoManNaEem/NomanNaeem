@@ -3,563 +3,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noman Naeem — Odoo Expert & ERP Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Noman Naeem — Odoo ERP Developer & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --card: #16161f;
-    --border: #2a2a3a;
-    --accent: #7c5cfc;
-    --accent2: #00e5a0;
-    --accent3: #ff6b6b;
-    --amber: #ffb547;
-    --text: #e8e8f0;
-    --muted: #7a7a9a;
-    --tag-bg: rgba(124, 92, 252, 0.12);
-    --tag-border: rgba(124, 92, 252, 0.3);
+    --bg: #07080f;
+    --card: #0f1019;
+    --card2: #13141e;
+    --border: #1e2030;
+    --border2: #2a2d45;
+    --accent: #6c63ff;
+    --accent2: #00dfa2;
+    --amber: #f5a623;
+    --red: #ff5e7d;
+    --text: #eaeaf5;
+    --muted: #6b6d8a;
+    --soft: #9899b8;
+    --tag-bg: rgba(108,99,255,0.1);
+    --tag-border: rgba(108,99,255,0.25);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.75; overflow-x: hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+  .bg-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px); background-size: 50px 50px; }
+  .blob { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; }
+  .blob-1 { width: 700px; height: 700px; background: rgba(108,99,255,0.1); top: -250px; right: -200px; }
+  .blob-2 { width: 500px; height: 500px; background: rgba(0,223,162,0.07); bottom: 5%; left: -150px; }
+  .blob-3 { width: 300px; height: 300px; background: rgba(245,166,35,0.05); top: 50%; right: 10%; }
 
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-
-  /* GRID BG */
-  .grid-bg {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(124, 92, 252, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124, 92, 252, 0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* GLOW BLOBS */
-  .blob {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .blob-1 { width: 600px; height: 600px; background: rgba(124, 92, 252, 0.12); top: -200px; right: -200px; }
-  .blob-2 { width: 400px; height: 400px; background: rgba(0, 229, 160, 0.08); bottom: 10%; left: -100px; }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(20px);
-    background: rgba(10, 10, 15, 0.7);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(24px); background: rgba(7,8,15,0.8); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+  .nav-logo em { color: var(--accent); font-style: normal; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
+  .nav-badge { background: rgba(0,223,162,0.1); border: 1px solid rgba(0,223,162,0.3); color: var(--accent2); font-family: 'DM Mono', monospace; font-size: 0.63rem; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.1em; }
 
-  /* MAIN WRAPPER */
   main { position: relative; z-index: 1; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 120px 40px 80px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; max-width: 1120px; margin: 0 auto; }
+  .hero-label { display: inline-flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent2); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 28px; }
+  .hero-label::before { content: ''; width: 28px; height: 1px; background: var(--accent2); }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 5.5vw, 5.2rem); font-weight: 800; line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 28px; }
+  .hl { color: var(--accent); }
+  .hl2 { color: var(--accent2); }
+  .hero-sub { max-width: 580px; color: var(--soft); font-size: 1.02rem; line-height: 1.85; margin-bottom: 48px; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 64px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.22s; cursor: pointer; border: none; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #5a52e0; transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border2); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent2);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 32px; height: 1px;
-    background: var(--accent2);
-  }
+  .stats { display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; max-width: 750px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 120px; padding: 22px 24px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-n { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .stat-n em { color: var(--accent); font-style: normal; }
+  .stat-l { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
 
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.8rem, 6vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-  }
-  .hero h1 .line2 { color: var(--accent); }
+  .sec { padding: 100px 0; }
+  .sec-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+  .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .sec-sub { color: var(--muted); max-width: 480px; font-size: 0.92rem; margin-bottom: 56px; }
+  hr.divider { border: none; border-top: 1px solid var(--border); max-width: 1120px; margin: 0 auto; }
 
-  .hero-desc {
-    max-width: 560px;
-    color: var(--muted);
-    font-size: 1.05rem;
-    margin-bottom: 48px;
-    line-height: 1.8;
-  }
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .filter-btn { background: var(--card2); border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; padding: 8px 18px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; transition: all 0.28s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .project-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .project-card:hover::after { opacity: 1; }
+  .project-card.hidden { display: none !important; }
+  .project-card.wide { grid-column: span 2; background: linear-gradient(135deg, rgba(108,99,255,0.07) 0%, rgba(0,223,162,0.04) 100%); }
 
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-    padding: 14px 32px;
-    border-radius: 6px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-  }
-  .btn-primary:hover { background: transparent; border-color: var(--accent); color: var(--accent); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--text);
-    padding: 14px 32px;
-    border-radius: 6px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* STATS ROW */
-  .stats-row {
-    display: flex;
-    gap: 48px;
-    margin-top: 72px;
-    padding-top: 48px;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-  .stat-item {}
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .stat-num span { color: var(--accent); }
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-
-  /* SECTIONS */
-  section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-
-  .section-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 16px;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    max-width: 500px;
-    margin-bottom: 64px;
-    font-size: 0.95rem;
-  }
-
-  /* PROJECTS GRID */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-  }
-
-  .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .project-card:hover::before { opacity: 1; }
-
-  .project-card.featured {
-    grid-column: span 2;
-    background: linear-gradient(135deg, rgba(124,92,252,0.06) 0%, rgba(0,229,160,0.04) 100%);
-  }
-
-  .card-icon {
-    width: 48px; height: 48px;
-    background: rgba(124, 92, 252, 0.15);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-  }
-
-  .card-category {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--accent2);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    margin-bottom: 12px;
-    color: var(--text);
-  }
-
-  .card-desc {
-    color: var(--muted);
-    font-size: 0.88rem;
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
-
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .tag {
-    background: var(--tag-bg);
-    border: 1px solid var(--tag-border);
-    color: var(--accent);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    padding: 4px 10px;
-    border-radius: 4px;
-    letter-spacing: 0.05em;
-  }
-  .tag.green {
-    background: rgba(0, 229, 160, 0.1);
-    border-color: rgba(0, 229, 160, 0.3);
-    color: var(--accent2);
-  }
-  .tag.amber {
-    background: rgba(255, 181, 71, 0.1);
-    border-color: rgba(255, 181, 71, 0.3);
-    color: var(--amber);
-  }
-
-  .card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 20px;
-    color: var(--accent);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: gap 0.2s;
-  }
+  .card-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(108,99,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 16px; flex-shrink: 0; }
+  .card-cat { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent2); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 7px; }
+  .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 9px; color: var(--text); }
+  .card-desc { color: var(--muted); font-size: 0.84rem; line-height: 1.75; margin-bottom: 16px; flex: 1; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.61rem; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.04em; }
+  .tag.g { background: rgba(0,223,162,0.08); border-color: rgba(0,223,162,0.25); color: var(--accent2); }
+  .tag.a { background: rgba(245,166,35,0.08); border-color: rgba(245,166,35,0.25); color: var(--amber); }
+  .tag.r { background: rgba(255,94,125,0.08); border-color: rgba(255,94,125,0.25); color: var(--red); }
+  .card-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.72rem; text-decoration: none; letter-spacing: 0.04em; transition: gap 0.2s; }
   .card-link:hover { gap: 10px; }
 
-  /* ODOO STORE SECTION */
-  .store-banner {
-    background: linear-gradient(135deg, rgba(124,92,252,0.1), rgba(0,229,160,0.06));
-    border: 1px solid rgba(124, 92, 252, 0.3);
-    border-radius: 16px;
-    padding: 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .store-banner-text h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-  }
-  .store-banner-text p { color: var(--muted); max-width: 460px; }
+  .store-banner { margin-top: 44px; background: linear-gradient(135deg, rgba(108,99,255,0.09), rgba(0,223,162,0.05)); border: 1px solid rgba(108,99,255,0.25); border-radius: 16px; padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .store-banner h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .store-banner p { color: var(--muted); max-width: 460px; font-size: 0.88rem; }
 
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-  }
-  .skill-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px 24px;
-    transition: border-color 0.2s;
-  }
-  .skill-item:hover { border-color: var(--accent); }
-  .skill-item-icon { font-size: 1.5rem; margin-bottom: 10px; }
-  .skill-item-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 4px;
-  }
-  .skill-item-sub { color: var(--muted); font-size: 0.78rem; }
+  .ai-highlight { background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,0,0,0)); border: 1px solid rgba(108,99,255,0.2); border-radius: 16px; padding: 48px; margin-bottom: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ai-highlight-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+  .ai-highlight h3 { font-family: 'Syne', sans-serif; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .ai-highlight p { color: var(--muted); font-size: 0.88rem; line-height: 1.8; }
+  .ai-highlight p strong { color: var(--text); }
+  .ai-metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ai-metric { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 22px; text-align: center; }
+  .ai-metric-val { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent2); letter-spacing: -0.03em; line-height: 1.1; }
+  .ai-metric-label { color: var(--muted); font-size: 0.75rem; margin-top: 6px; }
 
-  /* EXPERIENCE */
-  .exp-timeline { display: flex; flex-direction: column; gap: 0; }
-  .exp-item {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 32px;
-    position: relative;
-    padding-bottom: 48px;
-  }
-  .exp-item::before {
-    content: '';
-    position: absolute;
-    left: 180px;
-    top: 8px;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-  .exp-item:last-child::before { display: none; }
-  .exp-item::after {
-    content: '';
-    position: absolute;
-    left: 176px;
-    top: 6px;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-  }
-  .exp-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    padding-top: 4px;
-    text-align: right;
-    padding-right: 28px;
-  }
-  .exp-content {}
-  .exp-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-    margin-bottom: 4px;
-  }
-  .exp-company {
-    color: var(--accent2);
-    font-size: 0.85rem;
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 12px;
-  }
-  .exp-desc { color: var(--muted); font-size: 0.88rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+  .skill-card:hover { border-color: var(--accent); }
+  .skill-icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .skill-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.86rem; margin-bottom: 5px; }
+  .skill-detail { color: var(--muted); font-size: 0.75rem; line-height: 1.6; }
 
-  /* CONTACT */
+  .timeline { display: flex; flex-direction: column; }
+  .tl-item { display: grid; grid-template-columns: 160px 1fr; gap: 40px; position: relative; padding-bottom: 48px; }
+  .tl-item::before { content: ''; position: absolute; left: 158px; top: 10px; bottom: 0; width: 1px; background: var(--border); }
+  .tl-item:last-child::before { display: none; }
+  .tl-item::after { content: ''; position: absolute; left: 154px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.2); }
+  .tl-date { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); text-align: right; padding-right: 28px; padding-top: 2px; }
+  .tl-role { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  .tl-company { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent2); margin-bottom: 10px; }
+  .tl-bullets { padding-left: 16px; }
+  .tl-bullets li { color: var(--muted); font-size: 0.83rem; margin-bottom: 4px; }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    text-align: center;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 1;
+  .certs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .cert-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; font-size: 0.82rem; color: var(--soft); transition: border-color 0.2s; }
+  .cert-item:hover { border-color: var(--accent); color: var(--text); }
+  .cert-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 40px; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text); }
+  .footer-logo em { color: var(--accent); font-style: normal; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  .fu { animation: fadeUp 0.65s ease forwards; opacity: 0; }
+  .d1{animation-delay:0.1s}.d2{animation-delay:0.22s}.d3{animation-delay:0.34s}.d4{animation-delay:0.48s}
+
+  @media(max-width:900px){
+    .projects-grid{grid-template-columns:repeat(2,1fr);}
+    .project-card.wide{grid-column:span 2;}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+    .certs-grid{grid-template-columns:repeat(2,1fr);}
+    .ai-highlight{grid-template-columns:1fr;}
+    .edu-grid{grid-template-columns:1fr;}
   }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-up {
-    animation: fadeUp 0.7s ease forwards;
-    opacity: 0;
-  }
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.25s; }
-  .delay-3 { animation-delay: 0.4s; }
-  .delay-4 { animation-delay: 0.55s; }
-  .delay-5 { animation-delay: 0.7s; }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    .hero { padding: 100px 20px 60px; }
-    section { padding: 60px 20px; }
-    .project-card.featured { grid-column: span 1; }
-    .exp-item { grid-template-columns: 1fr; }
-    .exp-item::before, .exp-item::after { display: none; }
-    .exp-date { text-align: left; padding-right: 0; }
-    .store-banner { flex-direction: column; }
-    .stats-row { gap: 32px; }
-  }
-
-  /* DIVIDER */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    max-width: 1100px;
-    margin: 0 auto;
+  @media(max-width:640px){
+    nav{padding:14px 20px;}
+    .nav-links{display:none;}
+    .hero{padding:100px 20px 60px;}
+    .container{padding:0 20px;}
+    .sec{padding:60px 0;}
+    .projects-grid{grid-template-columns:1fr;}
+    .project-card.wide{grid-column:span 1;}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+    .certs-grid{grid-template-columns:1fr;}
+    .tl-item{grid-template-columns:1fr;gap:4px;}
+    .tl-item::before,.tl-item::after{display:none;}
+    .tl-date{text-align:left;padding-right:0;}
+    .stats{flex-direction:column;}
+    .stat{border-right:none;border-bottom:1px solid var(--border);}
+    .store-banner{flex-direction:column;}
+    footer{flex-direction:column;text-align:center;padding:24px 20px;}
   }
 </style>
 </head>
 <body>
 
-<div class="grid-bg"></div>
+<div class="bg-grid"></div>
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
-<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Noman<span>.</span></a>
+  <a href="#" class="nav-logo">Noman<em>.</em></a>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#ai">AI Research</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
-    
+    <li><a href="#certs">Certs</a></li>
+    <li><span class="nav-badge">Available for hire</span></li>
   </ul>
 </nav>
 
 <main>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow fade-up">Available for Odoo Projects</div>
-    <h1 class="fade-up delay-1">
-      Odoo ERP<br>
-      <span class="line2">Developer & AI</span><br>
-      Automation Expert
-    </h1>
-    <p class="hero-desc fade-up delay-2">
-      3+ years building production-grade Odoo solutions — from custom ERP modules and third-party API integrations to AI chatbots and carrier shipping systems. Based in Pakistan, working with clients worldwide.
-    </p>
-    <div class="hero-actions fade-up delay-3">
-      <a href="https://apps.odoo.com/apps/modules/browse?search=EVALONTECH" target="_blank" class="btn-primary">View Odoo Store Apps ↗</a>
-    </div>
-
-    <div class="stats-row fade-up delay-4">
-      <div class="stat-item">
-        <div class="stat-num">3<span>+</span></div>
-        <div class="stat-label">Years Odoo Dev</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">25<span>+</span></div>
-        <div class="stat-label">Modules Built</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">10<span>+</span></div>
-        <div class="stat-label">API Integrations</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">v14<span>–19</span></div>
-        <div class="stat-label">Odoo Versions</div>
-      </div>
-    </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label fu">Odoo ERP Developer & AI Engineer</div>
+  <h1 class="fu d1">
+    Building Smarter<br>
+    <span class="hl">Odoo ERP</span> with<br>
+    <span class="hl2">AI at its Core</span>
+  </h1>
+  <p class="hero-sub fu d2">
+    <strong>3+ years</strong> delivering production Odoo solutions — custom modules, carrier integrations, VoIP, AI chatbots, and ML-powered automation. MS Computer Science · <strong>GPA 3.82</strong> · Cardiovascular AI Researcher. Odoo <strong>v14 through v19</strong>.
+  </p>
+  <div class="hero-btns fu d3">
+    <a href="https://apps.odoo.com/apps/modules/browse?search=EVALONTECH" target="_blank" class="btn btn-primary">📦 View Odoo App Store</a>
+    <a href="#projects" class="btn btn-outline">Browse Projects ↓</a>
   </div>
+  <div class="stats fu d4">
+    <div class="stat"><div class="stat-n">3<em>+</em></div><div class="stat-l">Years Odoo</div></div>
+    <div class="stat"><div class="stat-n">25<em>+</em></div><div class="stat-l">Modules Built</div></div>
+    <div class="stat"><div class="stat-n">10<em>+</em></div><div class="stat-l">API Integrations</div></div>
+    <div class="stat"><div class="stat-n">99<em>.67%</em></div><div class="stat-l">AI Accuracy</div></div>
+    <div class="stat"><div class="stat-n">v14<em>–19</em></div><div class="stat-l">Odoo Versions</div></div>
+  </div>
+</div>
 
-  <hr class="divider">
+<hr class="divider">
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-tag">// Selected Work</div>
-    <h2 class="section-title">Odoo Projects</h2>
-    <p class="section-sub">Real-world implementations, custom integrations, and published Odoo App Store modules.</p>
+<!-- PROJECTS -->
+<section id="projects" class="sec">
+  <div class="container">
+    <div class="sec-tag">// Selected Work</div>
+    <h2 class="sec-title">Odoo Projects</h2>
+    <p class="sec-sub">Production modules, API integrations, AI automation, and DevOps — all built and shipped.</p>
 
-    <!-- FILTER TABS -->
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="module">Custom Modules</button>
@@ -570,457 +234,366 @@
 
     <div class="projects-grid">
 
-      <!-- FEATURED: Odoo Store Apps -->
-      <div class="project-card featured" data-cat="module">
+      <div class="project-card wide" data-cat="module">
         <div class="card-icon">📦</div>
-        <div class="card-category">Published · Odoo App Store</div>
-        <div class="card-title">EVALONTECH Odoo Marketplace Modules</div>
-        <div class="card-desc">
-          Custom Odoo modules published on the official Odoo App Store under the EVALONTECH publisher account. Modules are community-focused, production-ready, and compatible with Odoo v14 through v19. Covers business process automation, UI enhancements, and integration utilities — downloadable and installable directly by clients globally.
-        </div>
+        <div class="card-cat">Published · Odoo App Store</div>
+        <div class="card-title">EVALONTECH — Official Odoo Marketplace Publisher</div>
+        <div class="card-desc">Custom Odoo modules published on apps.odoo.com under the EVALONTECH publisher account. Production-ready, community-focused, compatible across Odoo v14–v19. Business automation, UI enhancements, and integration utilities — directly installable by clients worldwide.</div>
         <div class="card-tags">
-          <span class="tag">Odoo 14</span>
-          <span class="tag">Odoo 15</span>
-          <span class="tag">Odoo 16</span>
-          <span class="tag">Odoo 17</span>
-          <span class="tag">Odoo 18</span>
-          <span class="tag">Odoo 19</span>
-          <span class="tag">Python</span>
-          <span class="tag">OWL JS</span>
-          <span class="tag green">Published</span>
+          <span class="tag">Odoo 14</span><span class="tag">Odoo 15</span><span class="tag">Odoo 16</span><span class="tag">Odoo 17</span><span class="tag">Odoo 18</span><span class="tag">Odoo 19</span><span class="tag">Python</span><span class="tag">OWL.js</span><span class="tag g">Live on App Store</span>
         </div>
         <a href="https://apps.odoo.com/apps/modules/browse?search=EVALONTECH" target="_blank" class="card-link">Browse on Odoo Store →</a>
       </div>
 
-      <!-- AI Chatbot -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">🤖</div>
-        <div class="card-category">AI Integration</div>
-        <div class="card-title">Odoo AI Chatbot Integration</div>
-        <div class="card-desc">
-          Built an intelligent AI chatbot embedded into Odoo's backend and website portal. Powered by OpenAI/LLM APIs, the bot handles customer queries, order status lookup, and ticket creation — fully connected to Odoo models via RPC and REST API.
-        </div>
-        <div class="card-tags">
-          <span class="tag">OpenAI API</span>
-          <span class="tag">Python</span>
-          <span class="tag">Odoo Website</span>
-          <span class="tag green">AI / NLP</span>
-        </div>
-      </div>
-
-      <!-- AI Automation -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">⚡</div>
-        <div class="card-category">AI Automation</div>
-        <div class="card-title">Odoo AI Process Automation</div>
-        <div class="card-desc">
-          Designed and implemented AI-powered automation workflows inside Odoo: intelligent invoice data extraction using OCR + LLM, auto-classification of support tickets, predictive lead scoring in CRM, and automated document generation from templates using AI.
-        </div>
-        <div class="card-tags">
-          <span class="tag">LLM</span>
-          <span class="tag">OCR</span>
-          <span class="tag">Odoo CRM</span>
-          <span class="tag">Odoo Helpdesk</span>
-          <span class="tag green">Machine Learning</span>
-        </div>
-      </div>
-
-      <!-- FedEx -->
-      <div class="project-card" data-cat="integration">
-        <div class="card-icon">🚚</div>
-        <div class="card-category">Carrier API Integration</div>
-        <div class="card-title">FedEx Freight Carrier API Integration</div>
-        <div class="card-desc">
-          Full integration of FedEx Freight REST API into Odoo's delivery module. Enables real-time rate quoting, shipment booking, label generation, and tracking status sync — directly from Odoo sales orders and stock pickings. Built for a US-based logistics client.
-        </div>
-        <div class="card-tags">
-          <span class="tag">FedEx REST API</span>
-          <span class="tag">Odoo Stock</span>
-          <span class="tag">Python</span>
-          <span class="tag amber">Carrier Integration</span>
-        </div>
-      </div>
-
-      <!-- OnSIP VoIP -->
-      <div class="project-card" data-cat="integration">
-        <div class="card-icon">📞</div>
-        <div class="card-category">VoIP Integration</div>
-        <div class="card-title">OnSIP VoIP Setup in Odoo</div>
-        <div class="card-desc">
-          Configured and integrated OnSIP SIP-based VoIP system with Odoo's built-in VoIP module. Enables click-to-call from CRM, customer records, and helpdesk tickets. Includes call logging, contact matching, and agent availability status sync.
-        </div>
-        <div class="card-tags">
-          <span class="tag">OnSIP</span>
-          <span class="tag">SIP / WebRTC</span>
-          <span class="tag">Odoo VoIP</span>
-          <span class="tag">Odoo CRM</span>
-          <span class="tag green">Telephony</span>
-        </div>
-      </div>
-
-      <!-- RingCentral VoIP -->
-      <div class="project-card" data-cat="integration">
-        <div class="card-icon">🔔</div>
-        <div class="card-category">VoIP Integration</div>
-        <div class="card-title">RingCentral VoIP Integration in Odoo</div>
-        <div class="card-desc">
-          Integrated RingCentral's cloud phone platform with Odoo using RingCentral REST API and webhooks. Supports inbound/outbound calls with auto-popup on incoming calls, call recordings stored against Odoo contacts, and real-time activity logging.
-        </div>
-        <div class="card-tags">
-          <span class="tag">RingCentral API</span>
-          <span class="tag">Webhooks</span>
-          <span class="tag">Odoo CRM</span>
-          <span class="tag green">Telephony</span>
-        </div>
-      </div>
-
-      <!-- IoT Health -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">🏥</div>
-        <div class="card-category">IoT + AI · EU Project</div>
-        <div class="card-title">SAFE Rural Health — IoT Remote Monitoring</div>
-        <div class="card-desc">
-          EU-funded project for improving rural healthcare in Pakistan. Built IoT-based remote health monitoring using smart sensing and deep learning. Processed vitals data (heart rate, SpO2, temperature) and integrated with backend dashboards for healthcare workers in remote areas.
-        </div>
-        <div class="card-tags">
-          <span class="tag">IoT</span>
-          <span class="tag">Deep Learning</span>
-          <span class="tag">Python</span>
-          <span class="tag">Big Data</span>
-          <span class="tag amber">EU Funded</span>
-        </div>
-      </div>
-
-      <!-- Custom Odoo Module -->
-      <div class="project-card" data-cat="module">
-        <div class="card-icon">🏗️</div>
-        <div class="card-category">Custom Module Development</div>
-        <div class="card-title">Custom Odoo ERP Modules (SilverdaleTech)</div>
-        <div class="card-desc">
-          Delivered multiple custom Odoo modules for US clients at SilverdaleTech — including custom approval workflows, multi-company reporting dashboards, and automated email + PDF report generation tailored to business-specific requirements.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Python</span>
-          <span class="tag">OWL JS</span>
-          <span class="tag">QWeb</span>
-          <span class="tag">Multi-Company</span>
-          <span class="tag green">US Client</span>
-        </div>
-      </div>
-
-      <!-- Cardiovascular AI -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">❤️</div>
-        <div class="card-category">Research · Scientific Reports (Nature)</div>
-        <div class="card-title">AI Cardiovascular Disease Classification</div>
-        <div class="card-desc">
-          Co-authored research paper on deep learning-based cardiovascular disease classification submitted to Scientific Reports (Nature journal). Designed and trained ML models achieving strong classification accuracy across clinical datasets — bridging AI research with medical diagnostics.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Deep Learning</span>
-          <span class="tag">Python</span>
-          <span class="tag">Scikit-Learn</span>
-          <span class="tag amber">Published Research</span>
-        </div>
-      </div>
-
-      <!-- Evalontech ERP -->
-      <div class="project-card">
-        <div class="card-icon">🚀</div>
-        <div class="card-category">ERP Implementation · Startup</div>
-        <div class="card-title">Evalontech — Odoo Community ERP Deployments</div>
-        <div class="card-desc">
-          As founder of Evalontech, deliver end-to-end Odoo Community ERP implementations for SMEs — zero licensing cost advantage. Services include server setup, module configuration, data migration, custom development, and ongoing support for manufacturing, retail, and service-based businesses.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo Community</span>
-          <span class="tag">ERP Implementation</span>
-          <span class="tag">Data Migration</span>
-          <span class="tag green">Founder</span>
-        </div>
-      </div>
-
-      <!-- GitHub Actions Automation -->
-      <div class="project-card" data-cat="devops">
-        <div class="card-icon">⚙️</div>
-        <div class="card-category">DevOps · CI/CD Automation</div>
-        <div class="card-title">GitHub Actions CI/CD for Odoo Modules</div>
-        <div class="card-desc">
-          Built automated GitHub Actions pipelines for Odoo module development workflows — including automated linting with flake8/pylint, unit test runners, module dependency checks, and auto-deployment triggers to staging environments on pull request merge. Cuts release cycles from hours to minutes.
-        </div>
-        <div class="card-tags">
-          <span class="tag">GitHub Actions</span>
-          <span class="tag">CI/CD</span>
-          <span class="tag">Python</span>
-          <span class="tag">pytest</span>
-          <span class="tag green">DevOps</span>
-        </div>
-      </div>
-
-      <!-- Odoo.sh Automation -->
-      <div class="project-card" data-cat="devops">
-        <div class="card-icon">☁️</div>
-        <div class="card-category">Odoo.sh · Cloud Deployment</div>
-        <div class="card-title">Odoo.sh Branch & Deployment Automation</div>
-        <div class="card-desc">
-          Configured and managed full Odoo.sh cloud environments — automating branch builds, staging/production promotion workflows, scheduled database backups, and module upgrade scripts. Integrated with GitHub repositories for seamless push-to-deploy pipelines used in production client environments.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo.sh</span>
-          <span class="tag">GitHub</span>
-          <span class="tag">Shell Script</span>
-          <span class="tag">Cloud Deploy</span>
-          <span class="tag amber">Production</span>
-        </div>
-      </div>
-
-      <!-- Shopfloor Workflow -->
-      <div class="project-card" data-cat="module">
-        <div class="card-icon">🏭</div>
-        <div class="card-category">Manufacturing · MRP</div>
-        <div class="card-title">Shopfloor Workflow Customization</div>
-        <div class="card-desc">
-          Deep customization of Odoo's Shopfloor (MRP & barcode) module for manufacturing clients — custom work order routing, operator-specific task queues, real-time production progress tracking, and barcode scan validation for component consumption and finished goods entry. Replaced manual paper-based shop floor processes entirely.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo MRP</span>
-          <span class="tag">Shopfloor</span>
-          <span class="tag">Barcode</span>
-          <span class="tag">Work Orders</span>
-          <span class="tag green">Manufacturing</span>
-        </div>
-      </div>
-
-      <!-- Negative Inventory -->
-      <div class="project-card" data-cat="module">
-        <div class="card-icon">📉</div>
-        <div class="card-category">Inventory · Custom Module</div>
-        <div class="card-title">Negative Inventory Control Module</div>
-        <div class="card-desc">
-          Developed a custom Odoo module to handle negative inventory scenarios for clients with advance-order and drop-shipment models. Includes configurable rules per product/warehouse, negative stock alerts, automatic backorder creation, and a reconciliation dashboard to track and resolve stock discrepancies.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo Inventory</span>
-          <span class="tag">Python</span>
-          <span class="tag">Stock Valuation</span>
-          <span class="tag amber">Custom Logic</span>
-        </div>
-      </div>
-
-      <!-- Helpdesk Automation -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">🎯</div>
-        <div class="card-category">Helpdesk · Automation</div>
-        <div class="card-title">Helpdesk Workflow Automation</div>
-        <div class="card-desc">
-          Built advanced automation on top of Odoo Helpdesk — auto-ticket routing by category/keyword, SLA breach alerts with escalation to managers, AI-powered ticket classification using NLP to assign priority and team, automated customer satisfaction surveys on ticket close, and a real-time SLA dashboard for team leads.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo Helpdesk</span>
-          <span class="tag">SLA Rules</span>
-          <span class="tag">NLP</span>
-          <span class="tag">Email Automation</span>
-          <span class="tag green">AI-Powered</span>
-        </div>
-      </div>
-
-      <!-- ML for HR -->
-      <div class="project-card" data-cat="ai">
-        <div class="card-icon">🧠</div>
-        <div class="card-category">AI / ML · HR Module</div>
-        <div class="card-title">Custom ML Models for Odoo HR</div>
-        <div class="card-desc">
-          Integrated custom-trained Machine Learning models directly into Odoo's HR module — employee attrition prediction using historical leave/performance data, resume screening automation with NLP-based candidate ranking, and attendance anomaly detection. Models served via Python microservice, connected to Odoo via internal API calls.
-        </div>
-        <div class="card-tags">
-          <span class="tag">scikit-learn</span>
-          <span class="tag">NLP</span>
-          <span class="tag">Odoo HR</span>
-          <span class="tag">Python Flask</span>
-          <span class="tag green">Machine Learning</span>
-        </div>
-      </div>
-
-      <!-- QWeb Customizations -->
-      <div class="project-card" data-cat="module">
-        <div class="card-icon">🖨️</div>
-        <div class="card-category">QWeb · Reports & Forms</div>
-        <div class="card-title">Custom QWeb Reports & Form Modifications</div>
-        <div class="card-desc">
-          Extensive client-specific QWeb customizations across invoices, delivery slips, purchase orders, work orders, and HR contracts — multi-language layouts, branded PDF headers/footers, conditional field visibility, dynamic barcode/QR code generation, and pixel-perfect print formatting matching client's existing paper forms.
-        </div>
-        <div class="card-tags">
-          <span class="tag">QWeb</span>
-          <span class="tag">XML</span>
-          <span class="tag">CSS Print</span>
-          <span class="tag">Odoo Reports</span>
-          <span class="tag amber">Multi-language</span>
-        </div>
-      </div>
-
-      <!-- Custom Dashboards -->
-      <div class="project-card" data-cat="module">
-        <div class="card-icon">📊</div>
-        <div class="card-category">BI · Custom Dashboards</div>
-        <div class="card-title">Custom Odoo Dashboards & KPI Widgets</div>
-        <div class="card-desc">
-          Built executive-level custom dashboards inside Odoo using OWL.js components and PostgreSQL-optimized queries — real-time sales KPIs, inventory movement heatmaps, HR attendance summaries, and financial overviews. Includes drill-down filtering, date range selectors, and export-to-Excel functionality for management reporting.
-        </div>
-        <div class="card-tags">
-          <span class="tag">OWL.js</span>
-          <span class="tag">PostgreSQL</span>
-          <span class="tag">Chart.js</span>
-          <span class="tag">Odoo BI</span>
-          <span class="tag green">Real-time</span>
-        </div>
-      </div>
-
-      <!-- Contract Management -->
       <div class="project-card" data-cat="module">
         <div class="card-icon">📝</div>
-        <div class="card-category">Custom Module · Odoo Community</div>
+        <div class="card-cat">Custom Module · Community</div>
         <div class="card-title">Contract Management for Odoo Community</div>
-        <div class="card-desc">
-          Full-featured Contract Management module built from scratch for Odoo Community (which lacks it natively) — contract creation with template library, multi-party signatory tracking, expiry alerts and auto-renewal workflows, linked invoicing schedules, document attachment management, and audit trail logging. Used by legal and procurement teams.
-        </div>
-        <div class="card-tags">
-          <span class="tag">Odoo Community</span>
-          <span class="tag">Python</span>
-          <span class="tag">OWL.js</span>
-          <span class="tag">Document Mgmt</span>
-          <span class="tag green">Published</span>
-        </div>
+        <div class="card-desc">Full contract lifecycle built from scratch — template library, multi-party signatory tracking, expiry alerts, auto-renewal workflows, linked invoicing schedules, document management, and full audit trail logging.</div>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">OWL.js</span><span class="tag">Odoo Community</span><span class="tag g">Published</span></div>
+      </div>
+
+      <div class="project-card" data-cat="ai">
+        <div class="card-icon">🤖</div>
+        <div class="card-cat">AI Integration · NLP</div>
+        <div class="card-title">AI Chatbot Integration in Odoo ERP</div>
+        <div class="card-desc">Conversational assistant embedded in Odoo backend and website live chat. Handles customer queries, order status, and ticket creation — connected to Odoo models via REST API and RPC with NLP intent classification.</div>
+        <div class="card-tags"><span class="tag">OpenAI API</span><span class="tag">NLP</span><span class="tag">Python</span><span class="tag">REST API</span><span class="tag g">AI-Powered</span></div>
+      </div>
+
+      <div class="project-card" data-cat="ai">
+        <div class="card-icon">⚡</div>
+        <div class="card-cat">AI Automation · ERP</div>
+        <div class="card-title">AI-Powered Odoo Process Automation</div>
+        <div class="card-desc">OCR + LLM invoice extraction, auto-classification of support tickets, predictive lead scoring in CRM, and AI-driven document generation. Reduced manual data entry by 70%+ for clients.</div>
+        <div class="card-tags"><span class="tag">LLM</span><span class="tag">OCR</span><span class="tag">Odoo CRM</span><span class="tag">Odoo Helpdesk</span><span class="tag g">Machine Learning</span></div>
+      </div>
+
+      <div class="project-card" data-cat="ai">
+        <div class="card-icon">🧠</div>
+        <div class="card-cat">AI / ML · HR Module</div>
+        <div class="card-title">Custom ML Models for Odoo HR</div>
+        <div class="card-desc">TensorFlow-based employee attrition prediction, NLP resume screening and candidate ranking, and attendance anomaly detection — all served via Python microservice and connected to Odoo via internal API calls.</div>
+        <div class="card-tags"><span class="tag">TensorFlow</span><span class="tag">scikit-learn</span><span class="tag">NLP</span><span class="tag">Odoo HR</span><span class="tag g">Predictive AI</span></div>
+      </div>
+
+      <div class="project-card" data-cat="ai">
+        <div class="card-icon">🎯</div>
+        <div class="card-cat">Helpdesk · Smart Automation</div>
+        <div class="card-title">AI-Driven Helpdesk Workflow Automation</div>
+        <div class="card-desc">AI ticket routing by keyword/category, SLA breach escalation, NLP-based priority classification, automated CSAT surveys on ticket close, and a real-time SLA compliance dashboard for team leads.</div>
+        <div class="card-tags"><span class="tag">Odoo Helpdesk</span><span class="tag">NLP</span><span class="tag">SLA Rules</span><span class="tag">Email Automation</span><span class="tag g">AI-Powered</span></div>
+      </div>
+
+      <div class="project-card" data-cat="integration">
+        <div class="card-icon">🚚</div>
+        <div class="card-cat">Carrier API Integration</div>
+        <div class="card-title">FedEx Freight REST API Integration</div>
+        <div class="card-desc">Complete FedEx Freight integration — real-time rate quoting, shipment booking, PDF label generation, and live tracking sync directly from Odoo sales orders and stock pickings. Built for a US logistics client.</div>
+        <div class="card-tags"><span class="tag">FedEx REST API</span><span class="tag">Odoo Stock</span><span class="tag">Python</span><span class="tag a">Carrier Integration</span></div>
+      </div>
+
+      <div class="project-card" data-cat="integration">
+        <div class="card-icon">📞</div>
+        <div class="card-cat">VoIP Integration · SIP</div>
+        <div class="card-title">OnSIP VoIP Setup in Odoo</div>
+        <div class="card-desc">Full OnSIP SIP-based VoIP integration with Odoo — click-to-call from CRM, helpdesk, and contacts. Auto call logging, contact matching on inbound, and agent availability status sync.</div>
+        <div class="card-tags"><span class="tag">OnSIP</span><span class="tag">SIP / WebRTC</span><span class="tag">Odoo VoIP</span><span class="tag">Odoo CRM</span><span class="tag g">Telephony</span></div>
+      </div>
+
+      <div class="project-card" data-cat="integration">
+        <div class="card-icon">🔔</div>
+        <div class="card-cat">VoIP Integration · Cloud</div>
+        <div class="card-title">RingCentral VoIP Integration in Odoo</div>
+        <div class="card-desc">RingCentral cloud telephony via REST API and webhooks — inbound call popup, outbound dialing from any Odoo record, call recordings against contacts, and real-time activity logging in CRM and helpdesk.</div>
+        <div class="card-tags"><span class="tag">RingCentral API</span><span class="tag">Webhooks</span><span class="tag">Odoo CRM</span><span class="tag g">Telephony</span></div>
+      </div>
+
+      <div class="project-card" data-cat="devops">
+        <div class="card-icon">⚙️</div>
+        <div class="card-cat">DevOps · CI/CD</div>
+        <div class="card-title">GitHub Actions CI/CD for Odoo Modules</div>
+        <div class="card-desc">Automated pipelines — flake8/pylint linting, pytest unit test runners, module dependency validation, and auto-deploy to staging on pull request merge. Cuts release cycles from hours to minutes.</div>
+        <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">CI/CD</span><span class="tag">pytest</span><span class="tag">pylint</span><span class="tag g">DevOps</span></div>
+      </div>
+
+      <div class="project-card" data-cat="devops">
+        <div class="card-icon">☁️</div>
+        <div class="card-cat">Odoo.sh · Cloud Infra</div>
+        <div class="card-title">Odoo.sh Deployment & Branch Automation</div>
+        <div class="card-desc">Full Odoo.sh management — automated branch builds, staging-to-production promotion, scheduled database backups, module upgrade scripts, and GitHub integration for push-to-deploy in live client environments.</div>
+        <div class="card-tags"><span class="tag">Odoo.sh</span><span class="tag">GitHub</span><span class="tag">Shell Script</span><span class="tag a">Production</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">🏭</div>
+        <div class="card-cat">Manufacturing · MRP</div>
+        <div class="card-title">Shopfloor Workflow Customization</div>
+        <div class="card-desc">Custom Odoo Shopfloor for manufacturing — work order routing, operator task queues, real-time production tracking, and barcode scan validation for component consumption and finished goods.</div>
+        <div class="card-tags"><span class="tag">Odoo MRP</span><span class="tag">Shopfloor</span><span class="tag">Barcode</span><span class="tag g">Manufacturing</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">📉</div>
+        <div class="card-cat">Inventory · Custom Logic</div>
+        <div class="card-title">Negative Inventory Control Module</div>
+        <div class="card-desc">Custom module for advance-order and drop-shipment clients — configurable negative stock rules per product/warehouse, automated alerts, backorder creation, and a reconciliation dashboard.</div>
+        <div class="card-tags"><span class="tag">Odoo Inventory</span><span class="tag">Python</span><span class="tag">Stock Valuation</span><span class="tag a">Custom Logic</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">🖨️</div>
+        <div class="card-cat">QWeb · Reports & Forms</div>
+        <div class="card-title">Custom QWeb Reports & Form Modifications</div>
+        <div class="card-desc">Client-specific QWeb across invoices, DOs, POs, work orders, HR contracts — multi-language layouts, branded PDFs, conditional fields, dynamic QR/barcode generation, pixel-perfect print formatting.</div>
+        <div class="card-tags"><span class="tag">QWeb</span><span class="tag">XML</span><span class="tag">CSS Print</span><span class="tag a">Multi-language</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">📊</div>
+        <div class="card-cat">BI · OWL Dashboards</div>
+        <div class="card-title">Custom Odoo Dashboards & KPI Widgets</div>
+        <div class="card-desc">Executive dashboards using OWL.js + optimized PostgreSQL — real-time sales KPIs, inventory heatmaps, HR summaries, financials. Drill-down filters, date selectors, and Excel export for management reporting.</div>
+        <div class="card-tags"><span class="tag">OWL.js</span><span class="tag">PostgreSQL</span><span class="tag">Chart.js</span><span class="tag g">Real-time BI</span></div>
+      </div>
+
+      <div class="project-card" data-cat="ai">
+        <div class="card-icon">🏥</div>
+        <div class="card-cat">IoT + Deep Learning · EU Project</div>
+        <div class="card-title">SAFE Rural Health — IoT Remote Monitoring</div>
+        <div class="card-desc">EU-funded healthcare project in Pakistan. IoT remote monitoring using TensorFlow deep learning and smart sensing — processing vitals (heart rate, SpO₂, temperature) with backend dashboards for rural healthcare workers.</div>
+        <div class="card-tags"><span class="tag">IoT</span><span class="tag">TensorFlow</span><span class="tag">Python</span><span class="tag">Big Data</span><span class="tag a">EU Funded</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">🏗️</div>
+        <div class="card-cat">ERP Consulting · US Clients</div>
+        <div class="card-title">Custom Odoo ERP Modules — SilverdaleTech</div>
+        <div class="card-desc">Multiple modules for US clients — custom approval workflows, multi-company reporting dashboards, AI analytics, automated PDF report generation, and ERP workflow optimization tailored to client requirements.</div>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">OWL.js</span><span class="tag">QWeb</span><span class="tag">Multi-Company</span><span class="tag g">US Client</span></div>
+      </div>
+
+      <div class="project-card" data-cat="module">
+        <div class="card-icon">🚀</div>
+        <div class="card-cat">ERP Implementation · Startup</div>
+        <div class="card-title">Evalontech — Odoo Community ERP Deployments</div>
+        <div class="card-desc">End-to-end Odoo Community implementations for SMEs — zero licensing cost advantage. Server setup, module config, data migration, custom development, and ongoing support for manufacturing, retail, and service businesses.</div>
+        <div class="card-tags"><span class="tag">Odoo Community</span><span class="tag">ERP Implementation</span><span class="tag">Data Migration</span><span class="tag g">Founder</span></div>
       </div>
 
     </div>
 
-    <!-- Odoo Store Banner -->
-    <div class="store-banner" style="margin-top: 48px;">
-      <div class="store-banner-text">
-        <h3>📦 Published on Official Odoo App Store</h3>
-        <p>EVALONTECH modules are live on apps.odoo.com — installable by any Odoo community user worldwide. Built, maintained, and supported directly by me.</p>
+    <div class="store-banner">
+      <div>
+        <h3>📦 Live on the Official Odoo App Store</h3>
+        <p>EVALONTECH modules are published on apps.odoo.com — installable by any Odoo user worldwide. Built, maintained, and supported directly by me.</p>
       </div>
-      <a href="https://apps.odoo.com/apps/modules/browse?search=EVALONTECH" target="_blank" class="btn-primary">View All Apps ↗</a>
+      <a href="https://apps.odoo.com/apps/modules/browse?search=EVALONTECH" target="_blank" class="btn btn-primary">Browse All Apps ↗</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <hr class="divider">
+<hr class="divider">
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-tag">// Technical Stack</div>
-    <h2 class="section-title">Core Skills</h2>
-    <p class="section-sub">Technologies and platforms I work with daily on Odoo projects and beyond.</p>
+<!-- AI RESEARCH -->
+<section id="ai" class="sec">
+  <div class="container">
+    <div class="sec-tag">// AI Research</div>
+    <h2 class="sec-title">Academic AI Work</h2>
+    <p class="sec-sub">MS thesis and published research at the intersection of deep learning and medical diagnostics.</p>
 
+    <div class="ai-highlight">
+      <div>
+        <div class="ai-highlight-label">MS Thesis · COMSATS University · 2025</div>
+        <h3>Heart Sound Classification Using Hybrid Deep Learning</h3>
+        <p>Developed a <strong>Conv2D + LSTM hybrid architecture</strong> for automated cardiovascular disease detection from heart sounds. Used spectrogram-based feature extraction (Librosa), addressed class imbalance with advanced augmentation, and trained on multi-class clinical datasets. Submitted to <strong>Scientific Reports (Nature)</strong>.</p>
+        <div style="margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="tag">TensorFlow</span><span class="tag">Conv2D</span><span class="tag">LSTM</span><span class="tag">Librosa</span><span class="tag">Spectrogram</span><span class="tag g">MS Thesis</span><span class="tag a">Scientific Reports · Nature</span>
+        </div>
+      </div>
+      <div class="ai-metrics-grid">
+        <div class="ai-metric"><div class="ai-metric-val">99.67%</div><div class="ai-metric-label">Classification Accuracy</div></div>
+        <div class="ai-metric"><div class="ai-metric-val">3.82</div><div class="ai-metric-label">MS GPA / 4.00</div></div>
+        <div class="ai-metric"><div class="ai-metric-val">Conv2D + LSTM</div><div class="ai-metric-label">Hybrid Architecture</div></div>
+        <div class="ai-metric"><div class="ai-metric-val">Nature</div><div class="ai-metric-label">Target Journal</div></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;">
+      <div class="skill-card"><div class="skill-icon">🫀</div><div class="skill-name">Cardiovascular AI</div><div class="skill-detail">Heart sound classification, ECG analysis, biomedical signal processing</div></div>
+      <div class="skill-card"><div class="skill-icon">🔬</div><div class="skill-name">Medical Imaging</div><div class="skill-detail">Deep learning for clinical decision support and diagnostic imaging</div></div>
+      <div class="skill-card"><div class="skill-icon">💡</div><div class="skill-name">Explainable AI</div><div class="skill-detail">Interpretable ML models for medical applications and clinical trust</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills" class="sec">
+  <div class="container">
+    <div class="sec-tag">// Technical Stack</div>
+    <h2 class="sec-title">Core Skills</h2>
+    <p class="sec-sub">From Odoo internals to ML pipelines — the full stack I work with daily.</p>
     <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-item-icon">🐍</div>
-        <div class="skill-item-name">Python / ORM</div>
-        <div class="skill-item-sub">3+ years, Odoo models & business logic</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🌐</div>
-        <div class="skill-item-name">JavaScript / OWL</div>
-        <div class="skill-item-sub">Odoo 16/17/18/19 OWL framework, custom widgets</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🗄️</div>
-        <div class="skill-item-name">PostgreSQL</div>
-        <div class="skill-item-sub">Database optimization, raw SQL</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🔌</div>
-        <div class="skill-item-name">REST API / XML-RPC</div>
-        <div class="skill-item-sub">External integrations, webhook handlers</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🤖</div>
-        <div class="skill-item-name">AI / LLM Integration</div>
-        <div class="skill-item-sub">OpenAI, Hugging Face, OCR pipelines</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">📦</div>
-        <div class="skill-item-name">Odoo Module Dev</div>
-        <div class="skill-item-sub">Community & Enterprise, v14–v19</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🖨️</div>
-        <div class="skill-item-name">QWeb / Reports</div>
-        <div class="skill-item-sub">Custom PDF/HTML reports, templates</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">☁️</div>
-        <div class="skill-item-name">Linux / Docker</div>
-        <div class="skill-item-sub">Self-hosted Odoo deployment, VPS setup</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">📞</div>
-        <div class="skill-item-name">VoIP / SIP</div>
-        <div class="skill-item-sub">OnSIP, RingCentral, Odoo VoIP module</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🚚</div>
-        <div class="skill-item-name">Carrier Integrations</div>
-        <div class="skill-item-sub">FedEx, DHL, UPS APIs in Odoo</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🔗</div>
-        <div class="skill-item-name">GitHub / Git</div>
-        <div class="skill-item-sub">Version control, CI workflows</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-item-icon">🎯</div>
-        <div class="skill-item-name">IoT + Deep Learning</div>
-        <div class="skill-item-sub">TensorFlow, smart sensors, SAFE Project</div>
-      </div>
+      <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python / ORM</div><div class="skill-detail">3+ years · Odoo models, business logic, migrations</div></div>
+      <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-name">JavaScript / OWL</div><div class="skill-detail">Odoo 16–19 OWL framework, widgets, JS controllers</div></div>
+      <div class="skill-card"><div class="skill-icon">🗄️</div><div class="skill-name">PostgreSQL</div><div class="skill-detail">Query optimization, raw SQL, reporting, indexing</div></div>
+      <div class="skill-card"><div class="skill-icon">🔌</div><div class="skill-name">REST API / XML-RPC</div><div class="skill-detail">External integrations, webhooks, Odoo JSON-RPC</div></div>
+      <div class="skill-card"><div class="skill-icon">🤖</div><div class="skill-name">AI / LLM Integration</div><div class="skill-detail">OpenAI, Hugging Face, OCR pipelines, NLP in Odoo</div></div>
+      <div class="skill-card"><div class="skill-icon">🧠</div><div class="skill-name">TensorFlow / ML</div><div class="skill-detail">Deep learning, scikit-learn, signal processing, deployment</div></div>
+      <div class="skill-card"><div class="skill-icon">🖨️</div><div class="skill-name">QWeb / Reports</div><div class="skill-detail">Custom PDF/HTML, multi-language templates, print CSS</div></div>
+      <div class="skill-card"><div class="skill-icon">☁️</div><div class="skill-name">Odoo.sh / Docker</div><div class="skill-detail">Cloud deploy, branch management, self-hosted VPS</div></div>
+      <div class="skill-card"><div class="skill-icon">⚙️</div><div class="skill-name">GitHub Actions CI/CD</div><div class="skill-detail">Pipelines, linting, test runners, deploy hooks</div></div>
+      <div class="skill-card"><div class="skill-icon">📞</div><div class="skill-name">VoIP / SIP</div><div class="skill-detail">OnSIP, RingCentral, Odoo VoIP module, WebRTC</div></div>
+      <div class="skill-card"><div class="skill-icon">🚚</div><div class="skill-name">Carrier Integrations</div><div class="skill-detail">FedEx, DHL, UPS REST APIs inside Odoo delivery</div></div>
+      <div class="skill-card"><div class="skill-icon">📦</div><div class="skill-name">Odoo v14 – v19</div><div class="skill-detail">Community & Enterprise, module dev, upgrades, migrations</div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <hr class="divider">
+<hr class="divider">
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-tag">// Career Timeline</div>
-    <h2 class="section-title">Experience</h2>
-    <p class="section-sub">From IoT research to production-grade ERP engineering.</p>
-
-    <div class="exp-timeline">
-      <div class="exp-item">
-        <div class="exp-date">Jul 2025 – Present</div>
-        <div class="exp-content">
-          <div class="exp-title">Software Engineer (Odoo)</div>
-          <div class="exp-company">AKSA-SDS · Islamabad, Pakistan</div>
-          <div class="exp-desc">Building and maintaining Odoo ERP solutions for enterprise clients. Leading custom module development, API integrations, and AI automation workflows at a top-tier Odoo consultancy.</div>
+<!-- EXPERIENCE -->
+<section id="experience" class="sec">
+  <div class="container">
+    <div class="sec-tag">// Career</div>
+    <h2 class="sec-title">Experience</h2>
+    <p class="sec-sub">From EU-funded IoT research to senior Odoo engineering at an international consultancy.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025 – Present</div>
+        <div>
+          <div class="tl-role">Software Engineer — Odoo ERP</div>
+          <div class="tl-company">AKSA-SDS · Islamabad, Pakistan</div>
+          <ul class="tl-bullets">
+            <li>Developing custom ERP modules for enterprise business automation using Python</li>
+            <li>Integrating AI analytics and predictive models into enterprise Odoo workflows</li>
+            <li>Designing scalable backend systems and REST API integrations for clients</li>
+          </ul>
         </div>
       </div>
-      <div class="exp-item">
-        <div class="exp-date">Mar 2024 – Jun 2025</div>
-        <div class="exp-content">
-          <div class="exp-title">Python Odoo Developer</div>
-          <div class="exp-company">SilverdaleTech · US-based (Remote)</div>
-          <div class="exp-desc">Delivered custom Odoo modules and integrations for American clients. Specialized in ERP optimization, carrier integrations (FedEx, UPS), and machine learning-powered business automation inside Odoo.</div>
+      <div class="tl-item">
+        <div class="tl-date">2024 – 2025</div>
+        <div>
+          <div class="tl-role">Python Odoo Developer</div>
+          <div class="tl-company">SilverdaleTech · US-based Odoo Consulting (Remote)</div>
+          <ul class="tl-bullets">
+            <li>Built AI-powered analytics dashboards and ERP automation for American clients</li>
+            <li>Developed API integrations for cross-platform systems (FedEx, VoIP, and more)</li>
+            <li>Automated enterprise workflows with Python scripting and Odoo.sh CI/CD pipelines</li>
+          </ul>
         </div>
       </div>
-      <div class="exp-item">
-        <div class="exp-date">Nov 2022 – Feb 2024</div>
-        <div class="exp-content">
-          <div class="exp-title">IoT & AI Developer</div>
-          <div class="exp-company">SAFE Rural Health · EU-Funded Project</div>
-          <div class="exp-desc">Developed IoT-based remote health monitoring systems for rural Pakistan using deep learning, big data, and smart sensing technologies. Contributed to reducing maternal and child mortality in underserved communities.</div>
+      <div class="tl-item">
+        <div class="tl-date">2022 – 2024</div>
+        <div>
+          <div class="tl-role">AI & IoT Developer</div>
+          <div class="tl-company">SAFE Rural Health · EU-Backed Project, Pakistan</div>
+          <ul class="tl-bullets">
+            <li>Developed AI models for medical data analysis in rural healthcare settings</li>
+            <li>Built remote patient monitoring systems using IoT sensors and TensorFlow deep learning</li>
+            <li>Processed and analysed large-scale healthcare datasets via ML pipelines</li>
+          </ul>
         </div>
       </div>
-      <div class="exp-item">
-        <div class="exp-date">2023 – Present</div>
-        <div class="exp-content">
-          <div class="exp-title">Founder</div>
-          <div class="exp-company">Evalontech · Rawalpindi, Pakistan</div>
-          <div class="exp-desc">Running a startup focused on Odoo Community ERP implementations for SMEs. Published custom modules on the official Odoo App Store under EVALONTECH. Serving local and international clients with zero-license-cost ERP deployments.</div>
+      <div class="tl-item">
+        <div class="tl-date">2023 – Present</div>
+        <div>
+          <div class="tl-role">Founder</div>
+          <div class="tl-company">Evalontech · Rawalpindi, Pakistan</div>
+          <ul class="tl-bullets">
+            <li>Running an Odoo Community ERP consultancy for SMEs — zero licensing cost model</li>
+            <li>Published custom modules on the official Odoo App Store (EVALONTECH)</li>
+            <li>Serving local and international clients with full-cycle ERP deployments</li>
+          </ul>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section class="sec" style="padding-top:60px;padding-bottom:60px;">
+  <div class="container">
+    <div class="sec-tag">// Education</div>
+    <h2 class="sec-title">Academic Background</h2>
+    <div class="edu-grid">
+      <div class="project-card" style="border-color:rgba(108,99,255,0.3);">
+        <div class="card-icon">🎓</div>
+        <div class="card-cat">2023 – 2025</div>
+        <div class="card-title">MS Computer Science</div>
+        <div class="card-desc" style="margin-bottom:0;">
+          COMSATS University Islamabad<br>
+          <strong style="color:var(--accent2);">GPA: 3.82 / 4.00</strong><br><br>
+          <em>Thesis: Heart Sound Classification Using Hybrid Deep Learning Model</em><br>
+          Conv2D + LSTM · 99.67% accuracy · Spectrogram analysis · Advanced augmentation
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="card-icon">🎓</div>
+        <div class="card-cat">2019 – 2023</div>
+        <div class="card-title">BS Computer Science</div>
+        <div class="card-desc" style="margin-bottom:0;">
+          COMSATS University Islamabad<br>
+          <strong style="color:var(--accent2);">GPA: 3.26 / 4.00</strong><br><br>
+          Foundation in algorithms, software engineering, databases, and AI fundamentals that underpins all professional work.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CERTIFICATIONS -->
+<section id="certs" class="sec" style="padding-top:60px;">
+  <div class="container">
+    <div class="sec-tag">// Certifications</div>
+    <h2 class="sec-title">Credentials</h2>
+    <p class="sec-sub" style="margin-bottom:40px;">Verified certifications from IBM, Google, DeepLearning.AI, and Microsoft.</p>
+    <div class="certs-grid">
+      <div class="cert-item"><span class="cert-icon">🏆</span>IBM Maximo Application Suite Foundation</div>
+      <div class="cert-item"><span class="cert-icon">🐍</span>MTA: Introduction to Programming Using Python</div>
+      <div class="cert-item"><span class="cert-icon">📊</span>Python Data Structures — University of Michigan</div>
+      <div class="cert-item"><span class="cert-icon">🤖</span>AI for Everyone — DeepLearning.AI</div>
+      <div class="cert-item"><span class="cert-icon">🌐</span>Google Digital Marketing Certification</div>
+      <div class="cert-item"><span class="cert-icon">✅</span>HackerRank Python & Problem Solving</div>
+      <div class="cert-item"><span class="cert-icon">🔢</span>Programming for Everybody — University of Michigan</div>
+      <div class="cert-item"><span class="cert-icon">☕</span>Java (Basic) — HackerRank</div>
+    </div>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div>Built by Noman Naeem (Malik Noman Naeem) · Odoo Developer · Rawalpindi, Pakista
+  <div class="footer-logo">Noman<em>.</em></div>
+  <div>Malik Noman Naeem · Odoo ERP Developer & AI Engineer · Rawalpindi, Pakistan</div>
+  <div>Evalontech · AKSA-SDS · Published on Odoo App Store</div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var cat = btn.getAttribute('data-filter');
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('.project-card').forEach(function(card) {
+          if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
